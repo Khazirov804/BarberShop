@@ -73,6 +73,12 @@ post '/visit' do
   erb "OK, Имя:#{@username}, Телефон: #{@phone}, Дата и время: #{@datetime}, Парикмахер: #{@barber}, Цвет: #{@color}" 
 end
 
+get '/showusers' do
+  erb "Hello World"
+end
+
 def get_db
-  return SQLite3::Database.new 'barbershop.db'
+  db = SQLite3::Database.new 'barbershop.db'
+  dd.results_as_hach = true
+  return db
 end
