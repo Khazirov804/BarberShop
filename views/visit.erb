@@ -2,11 +2,17 @@
 <p>На этой странице вы можете к нам записаться!</p>
 
 <script type="text/javascript">
+
   $(function(){
+
     $('#color').simplecolorpicker();
+    $('#datetimepicker').datetimepicker();
+
   });
 
 </script>
+
+
 
 
 <form action="/visit" method="POST" role="form">
@@ -24,7 +30,7 @@
 
   <div class="form-group">
   	<label>Когда вас ждать?</label>
-    <input  name="datetime" type="text" class="form-control" placeholder="Введите дату и время для записи"value="<%=@datetime%>">
+    <input id="datetimepicker" name="datetime" type="text" class="form-control" placeholder="Введите дату и время для записи"value="<%=@datetime%>">
   </div>
 
 
