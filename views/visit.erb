@@ -3,49 +3,84 @@
 
 <script type="text/javascript">
 
+  // Когда страница полностью загружена, запускаются следующие функции
   $(function(){
-
+    // Инициализация плагина simplecolorpicker для поля выбора цвета
+    // Этот плагин позволяет пользователю выбрать цвет из предустановленных вариантов
     $('#color').simplecolorpicker();
+    
+    // Инициализация плагина datetimepicker для поля выбора даты и времени
+    // Плагин позволяет выбрать дату и время из календаря и времени
     $('#datetimepicker').datetimepicker();
-
   });
 
 </script>
 
-
-
-
+<!-- Начало формы для записи на посещение -->
 <form action="/visit" method="POST" role="form">
 
+  <!-- Блок для ввода имени пользователя -->
   <div class="form-group">
-
+    <!-- Текстовая метка, которая объясняет, что нужно ввести -->
     <label>Ваше имя</label>
+    
+    <!-- Поле ввода для имени пользователя -->
+    <!-- Атрибут name указывает на то, как будет передано значение на сервер -->
+    <!-- Атрибут type="text" указывает, что это текстовое поле -->
+    <!-- Атрибут class="form-control" применяет стили из Bootstrap для поля -->
+    <!-- Атрибут placeholder предоставляет подсказку в поле до ввода данных -->
+    <!-- Атрибут value="<%=@username%>" задает значение по умолчанию, которое будет подставлено из Ruby-переменной @username -->
     <input name="username" type="text" class="form-control" placeholder="Введите ваше имя" value="<%=@username%>">
   </div>
 
+  <!-- Блок для ввода номера телефона -->
   <div class="form-group">
-  	<label>Ваш номер телефона</label>
+    <!-- Метка для поля ввода телефона -->
+    <label>Ваш номер телефона</label>
+    
+    <!-- Поле для ввода номера телефона -->
+    <!-- Атрибут value="<%=@phone%>" подставляет значение переменной @phone в поле, если оно есть -->
     <input name="phone" type="text" class="form-control" placeholder="Введите ваш номер телефона" value="<%=@phone%>">
   </div>
 
+  <!-- Блок для выбора даты и времени -->
   <div class="form-group">
-  	<label>Когда вас ждать?</label>
-    <input id="datetimepicker" name="datetime" type="text" class="form-control" placeholder="Введите дату и время для записи"value="<%=@datetime%>">
+    <!-- Метка для поля ввода даты и времени -->
+    <label>Когда вас ждать?</label>
+    
+    <!-- Поле для ввода даты и времени -->
+    <!-- Атрибут id="datetimepicker" используется для привязки плагина datetimepicker -->
+    <!-- Атрибут value="<%=@datetime%>" подставляет значение переменной @datetime для предварительного отображения в поле -->
+    <input id="datetimepicker" name="datetime" type="text" class="form-control" placeholder="Введите дату и время для записи" value="<%=@datetime%>">
   </div>
 
-
+  <!-- Блок для выбора парикмахера -->
   <div class="form-group">
+    <!-- Метка для выбора парикмахера -->
     <label>Выберите своего парикмахера</label>
+    
+    <!-- Выпадающий список для выбора парикмахера -->
+    <!-- Атрибут name="barber" указывает, что выбранное значение будет отправлено с этим именем -->
     <select name="barber" class="form-control">
-      <option <%= @barber == 'Jessie Pinkman'? 'selected' : '' %>>Jessie Pinkman</option>
-      <option <%= @barber == 'Walter White'? 'selected' : '' %>>Walter White</option>
-      <option <%= @barber == 'Gus Fring'? 'selected' : '' %>>Gus Fring</option>
+      <!-- Каждый option представляет одного парикмахера -->
+      <!-- Если выбран парикмахер, то атрибут selected будет добавлен автоматически для правильного отображения -->
+      <option <%= @barber == 'Jessie Pinkman' ? 'selected' : '' %>>Jessie Pinkman</option>
+      <option <%= @barber == 'Walter White' ? 'selected' : '' %>>Walter White</option>
+      <option <%= @barber == 'Gus Fring' ? 'selected' : '' %>>Gus Fring</option>
     </select>
   </div>
 
+  <!-- Блок для выбора цвета -->
   <div class="form-group">
-    <label>В какие цвета хотите себя покрасить: </label>
+    <!-- Метка для выбора цвета -->
+    <label>В какие цвета хотите себя покрасить:</label>
+    
+    <!-- Выпадающий список для выбора цвета -->
+    <!-- Атрибут id="color" используется для привязки плагина simplecolorpicker -->
+    <!-- Атрибут name="color" указывает, что выбранный цвет будет передан с этим именем -->
     <select id="color" name="color">
+      <!-- Каждый option — это доступный цвет для выбора -->
+      <!-- Атрибут value="#7bd148" определяет код цвета -->
       <option value="#7bd148">Green</option>
       <option value="#5484ed">Bold blue</option>
       <option value="#a4bdfc">Blue</option>
@@ -61,6 +96,8 @@
     </select>
   </div>
 
+  <!-- Кнопка для отправки формы -->
+  <!-- Когда пользователь нажимает кнопку, данные из формы отправляются на сервер по адресу /visit -->
   <button type="submit" class="btn btn-primary">Записаться</button>
 
 </form>
