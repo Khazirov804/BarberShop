@@ -24,6 +24,10 @@ def get_db
   return db # Возвращаем объект базы данных.
 end
 
+before do
+	db = get_db
+	@barbers = db.execute 'select * from barbers'
+end
 
 # Конфигурация приложения, выполняется один раз при запуске.
 configure do
@@ -52,7 +56,7 @@ configure do
 end
 
 # Главная страница приложения.
-# Обрабатывает GET-запрос на корневой URL ('/').
+# Обрабатывает GET-запрос на корневой URL ('/'). 
 get '/' do
   erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>" 
 end

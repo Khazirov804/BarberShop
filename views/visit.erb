@@ -62,11 +62,11 @@
     <!-- Выпадающий список для выбора парикмахера -->
     <!-- Атрибут name="barber" указывает, что выбранное значение будет отправлено с этим именем -->
     <select name="barber" class="form-control">
-      <!-- Каждый option представляет одного парикмахера -->
-      <!-- Если выбран парикмахер, то атрибут selected будет добавлен автоматически для правильного отображения -->
-      <option <%= @barber == 'Jessie Pinkman' ? 'selected' : '' %>>Jessie Pinkman</option>
-      <option <%= @barber == 'Walter White' ? 'selected' : '' %>>Walter White</option>
-      <option <%= @barber == 'Gus Fring' ? 'selected' : '' %>>Gus Fring</option>
+
+      <% @barbers.each do |item| %>
+      <option <%= @barber == item['username'] ? 'selected' : '' %>><%= item['username'] %></option>
+      <%end%>
+
     </select>
   </div>
 
