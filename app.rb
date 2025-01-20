@@ -4,12 +4,26 @@ require 'sinatra' # Подключаем фреймворк Sinatra для со�
 require 'sinatra/reloader' # Подключаем модуль для автоматической перезагрузки приложения при изменении кода.
 require 'sqlite3' # Подключаем библиотеку для работы с базой данных SQLite3.
 
+def is_barber_exists? db,username
+	db.execute('select * from barbers where username=?', [username]).length > 0
+end
+
+def seed_db db, barbers
+
+	barbers.each do |barber|
+		if !is_barber_exists? db, barber
+			db.execute 'insert into barbers (username) values (?)', [barber]
+		end
+	end
+end
+
 # Метод для создания подключения к базе данных.
 def get_db
   db = SQLite3::Database.new 'barbershop.db' # Создаем или открываем базу данных с именем 'barbershop.db'.
   db.results_as_hash = true # Настраиваем базу данных, чтобы результаты запросов возвращались в виде хэша, где имена колонок используются как ключи.
   return db # Возвращаем объект базы данных.
 end
+
 
 # Конфигурация приложения, выполняется один раз при запуске.
 configure do
@@ -20,13 +34,21 @@ configure do
   db.execute 'CREATE TABLE IF NOT EXISTS
     Users
     (
-      id INTEGER PRIMARY KEY AUTOINCREMENT, -- Уникальный идентификатор пользователя.
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT, -- Имя пользователя.
       phone TEXT, -- Телефон пользователя.
       datestamp TEXT, -- Дата и время записи.
       barber TEXT, -- Имя парикмахера.
       color TEXT -- Предпочитаемый цвет.
     )'
+  db.execute 'CREATE TABLE IF NOT EXISTS
+    barbers
+    (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT
+    )'
+
+    seed_db db, ['Jessie Pinkman', 'Walter White', 'Gus Fring', 'Mike Ehrmantraut']
 end
 
 # Главная страница приложения.
